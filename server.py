@@ -83,7 +83,7 @@ def run(num, length, prompt):
         return 500
 
 # routing
-@app.route("/generation", methods=['POST'])
+@app.route("/gpt2-generation", methods=['POST'])
 def generation():
     try:
         # only get one request at a time
@@ -92,9 +92,9 @@ def generation():
     
         # check image format
         try:
-            num = str(request.form['num'])
+            num = str(request.form['num_samples'])
             length = str(request.form['length'])
-            prompt = str(request.form['prompt'])
+            prompt = str(request.form['text'])
             num = int(num)
             length = int(length)
             
