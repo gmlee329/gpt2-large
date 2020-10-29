@@ -15,3 +15,5 @@ RUN pip install transformers
 RUN pip install flask && pip install waitress
 
 WORKDIR /gpt2_large/
+COPY . .
+ENTRYPOINT ["python", "server.py"]
