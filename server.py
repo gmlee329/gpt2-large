@@ -121,7 +121,7 @@ def generation():
         
         result = jsonify(result)
         
-        return result, 200
+        return result
     
     except Exception as e:
         print(e)
