@@ -10,6 +10,7 @@ import time
 
 # import for model
 from transformers import AutoTokenizer, AutoModelWithLMHead
+import torch
 import time
 
 # flask server
@@ -20,6 +21,10 @@ app = Flask(__name__)
 # model loading
 tokenizer = AutoTokenizer.from_pretrained("gpt2-large")
 model = AutoModelWithLMHead.from_pretrained("gpt2-large")
+
+# change cpu to gpu so that model can use gpu (because default type is cpu)
+device = torch.device("cuda")
+model.to(device)
 
 # request queue setting
 requests_queue = Queue()
@@ -61,6 +66,10 @@ def run(num, length, prompt):
     try:
         prompt = prompt.strip()
         input_ids = tokenizer.encode(prompt, return_tensors='pt')
+        
+        # input_ids also need to apply gpu device!
+        input_ids = input_ids.to(device)
+
         min_length = len(input_ids.tolist()[0])
         length += min_length
 
